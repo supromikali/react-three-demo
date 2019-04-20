@@ -49,7 +49,12 @@ class App extends Component {
 
 
         // SCALE ON RESIZE
+
+        // Check "How can scene scale be preserved on resize?" section of Three.js FAQ
         // https://threejs.org/docs/index.html#manual/en/introduction/FAQ
+
+        // code below is taken from Three.js fiddle
+        // http://jsfiddle.net/Q4Jpu/
 
         // remember these initial values
         var tanFOV = Math.tan( ( ( Math.PI / 180 ) * camera.fov / 2 ) );
