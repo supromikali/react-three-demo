@@ -36,15 +36,35 @@ class App extends Component {
 
         // CAMERA CONTROLS
         // https://threejs.org/docs/index.html#examples/controls/OrbitControls
-        var controls = new THREE.OrbitControls(camera);
+        this.controls = new THREE.OrbitControls(camera);
 
 
 
-        // ADD CUBE
-        var geometry = new THREE.BoxGeometry(1, 1, 1);
-        var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        // ADD CUBE AND LIGHTS
+        // https://threejs.org/docs/index.html#api/en/geometries/BoxGeometry
+        // https://threejs.org/docs/scenes/geometry-browser.html#BoxGeometry
+        var geometry = new THREE.BoxGeometry(2, 2, 2);
+        var material = new THREE.MeshPhongMaterial( {
+            color: 0x156289,
+            emissive: 0x072534,
+            side: THREE.DoubleSide,
+            flatShading: true
+        } );
         var cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
+
+        var lights = [];
+        lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+        lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+        lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+
+        lights[ 0 ].position.set( 0, 200, 0 );
+        lights[ 1 ].position.set( 100, 200, 100 );
+        lights[ 2 ].position.set( - 100, - 200, - 100 );
+
+        scene.add( lights[ 0 ] );
+        scene.add( lights[ 1 ] );
+        scene.add( lights[ 2 ] );
 
 
 
