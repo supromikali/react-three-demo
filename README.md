@@ -1,4 +1,4 @@
-# Minimal Three.js Wrapper For React
+# Minimal Three.js Wrapper for React
 
 The goal of this repo is to showcase how to integrate Three.js into a React app with minimal efforts and without extra packages installed. 
 
@@ -14,6 +14,6 @@ https://31yp61zxq6.codesandbox.io/
 - Three.js OrbitControls integration
 - scene resize on window resize
 
-# How To Run The App Locally
+# How to Run an App Locally
 
-This demo app uses [react-scripts](https://github.com/facebook/create-react-app#readme), so to run the app locally just type into a console: `npm install && npm start`
+This demo app uses [react-scripts](https://github.com/facebook/create-react-app#readme), so to run the app locally just type in your terminal: `npm install && npm start` and the app should start in your browser at http://localhost:3000
