@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import * as THREE from "three";
+import * as THREE from 'three';
+
+window.THREE = THREE; // THREE.OrbitControls expects THREE to be a global object
+require('three/examples/js/controls/OrbitControls');
+THREE = window.THREE; // add THREE.OrbitControls to an imported object
 
 class App extends Component {
     componentDidMount() {
@@ -17,7 +21,13 @@ class App extends Component {
 
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
+
+
+        // React-related code starts
         this.mount.appendChild(renderer.domElement);
+        this.controls = new THREE.OrbitControls(camera);
+        // React-related code ends
+
 
         var geometry = new THREE.BoxGeometry(1, 1, 1);
         var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
