@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import * as THREE from 'three';
-
-
-window.THREE = THREE; // THREE.OrbitControls expects THREE to be a global object
-require('three/examples/js/controls/OrbitControls');
-THREE = window.THREE; // add THREE.OrbitControls to an imported object
+import THREE from "./three";
 
 
 class App extends Component {
