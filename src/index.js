@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import THREE from "./three";
-
+import * as THREE from 'three';
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 class App extends Component {
     componentDidMount() {
@@ -31,7 +31,7 @@ class App extends Component {
 
         // CAMERA CONTROLS
         // https://threejs.org/docs/index.html#examples/controls/OrbitControls
-        this.controls = new THREE.OrbitControls(camera);
+        this.controls = new OrbitControls(camera);
 
 
 
