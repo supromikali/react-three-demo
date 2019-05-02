@@ -5,107 +5,94 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 class App extends Component {
     componentDidMount() {
+        this.sceneSetup();
+        this.addCustomSceneObjects();
+        this.startAnimationLoop();
+        window.addEventListener('resize', this.handleWindowResize);
+    }
 
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.handleWindowResize);
+        this.stopAnimationLoop();
+        this.removeCustomSceneObjects();
+        this.sceneDestroy();
+    }
 
-        // BASIC THREE.JS THINGS: SCENE, CAMERA, RENDERER
-        // Three.js Creating a scene tutorial
-        // https://threejs.org/docs/index.html#manual/en/introduction/Creating-a-scene
-        var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(
+    sceneSetup = () => {
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera(
             75,
             window.innerWidth / window.innerHeight,
             0.1,
             1000
         );
-        camera.position.z = 5;
+        this.camera.position.z = 5;
+        this.controls = new OrbitControls(this.camera);
+        this.renderer = new THREE.WebGLRenderer();
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.mount.appendChild(this.renderer.domElement);
+    };
 
-        var renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-
-
-
-        // MOUNT INSIDE OF REACT
-        this.mount.appendChild(renderer.domElement); // mount a scene inside of React using a ref
-
-
-
-        // CAMERA CONTROLS
-        // https://threejs.org/docs/index.html#examples/controls/OrbitControls
-        this.controls = new OrbitControls(camera);
-
-
-
-        // ADD CUBE AND LIGHTS
-        // https://threejs.org/docs/index.html#api/en/geometries/BoxGeometry
-        // https://threejs.org/docs/scenes/geometry-browser.html#BoxGeometry
-        var geometry = new THREE.BoxGeometry(2, 2, 2);
-        var material = new THREE.MeshPhongMaterial( {
+    addCustomSceneObjects = () => {
+        this.geometry = new THREE.BoxGeometry(2, 2, 2);
+        this.material = new THREE.MeshPhongMaterial( {
             color: 0x156289,
             emissive: 0x072534,
             side: THREE.DoubleSide,
             flatShading: true
         } );
-        var cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+        this.cube = new THREE.Mesh(this.geometry, this.material);
+        this.scene.add(this.cube);
 
-        var lights = [];
-        lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-        lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-        lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+        this.lights = [];
+        this.lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+        this.lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+        this.lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
 
-        lights[ 0 ].position.set( 0, 200, 0 );
-        lights[ 1 ].position.set( 100, 200, 100 );
-        lights[ 2 ].position.set( - 100, - 200, - 100 );
+        this.lights[ 0 ].position.set( 0, 200, 0 );
+        this.lights[ 1 ].position.set( 100, 200, 100 );
+        this.lights[ 2 ].position.set( - 100, - 200, - 100 );
 
-        scene.add( lights[ 0 ] );
-        scene.add( lights[ 1 ] );
-        scene.add( lights[ 2 ] );
+        this.scene.add( this.lights[ 0 ] );
+        this.scene.add( this.lights[ 1 ] );
+        this.scene.add( this.lights[ 2 ] );
+    };
 
+    animate = () => {
+        this.frameId = requestAnimationFrame(this.animate);
 
+        this.cube.rotation.x += 0.01;
+        this.cube.rotation.y += 0.01;
 
-        // SCALE ON RESIZE
+        this.renderer.render(this.scene, this.camera);
+    };
 
-        // Check "How can scene scale be preserved on resize?" section of Three.js FAQ
-        // https://threejs.org/docs/index.html#manual/en/introduction/FAQ
+    startAnimationLoop = () => !this.frameId && this.animate();
 
-        // code below is taken from Three.js fiddle
-        // http://jsfiddle.net/Q4Jpu/
+    stopAnimationLoop = () => {
+        cancelAnimationFrame(this.frameId);
+        this.frameId = null
+    };
 
-        // remember these initial values
-        var tanFOV = Math.tan( ( ( Math.PI / 180 ) * camera.fov / 2 ) );
-        var windowHeight = window.innerHeight;
-
-        window.addEventListener( 'resize', onWindowResize, false );
-
-        function onWindowResize( event ) {
-
-            camera.aspect = window.innerWidth / window.innerHeight;
-
-            // adjust the FOV
-            camera.fov = ( 360 / Math.PI ) * Math.atan( tanFOV * ( window.innerHeight / windowHeight ) );
-
-            camera.updateProjectionMatrix();
-            camera.lookAt( scene.position );
-
-            renderer.setSize( window.innerWidth, window.innerHeight );
-            renderer.render( scene, camera );
-
+    removeCustomSceneObjects = () => {
+        while (this.scene.children.length > 0) {
+            this.scene.remove(this.scene.children[0]);
         }
+        this.geometry.dispose();
+        this.material.dispose();
+    };
 
+    sceneDestroy = () => {
+        this.mount.removeChild(this.renderer.domElement);
+    };
 
+    handleWindowResize = () => {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
+        this.renderer.render( this.scene, this.camera );
+    };
 
-        // ANIMATE THE SCENE
-        var animate = function() {
-            requestAnimationFrame(animate);
-
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-
-            renderer.render(scene, camera);
-        };
-
-        animate();
-    }
     render() {
         return <div ref={ref => (this.mount = ref)} />;
     }
