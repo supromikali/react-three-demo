@@ -37,10 +37,10 @@ class App extends Component {
         this.camera.position.z = 9; // is used here to set some distance from a cube that is located at z = 0
         // OrbitControls allow a camera to orbit around the object
         // https://threejs.org/docs/#examples/controls/OrbitControls
-        this.controls = new OrbitControls(this.camera, this.mount);
+        this.controls = new OrbitControls( this.camera, this.mount );
         this.renderer = new THREE.WebGLRenderer();
-        this.renderer.setSize(width, height);
-        this.mount.appendChild(this.renderer.domElement); // mount using React ref
+        this.renderer.setSize( width, height );
+        this.mount.appendChild( this.renderer.domElement ); // mount using React ref
     };
 
     // Here should come custom code.
@@ -54,8 +54,8 @@ class App extends Component {
             side: THREE.DoubleSide,
             flatShading: true
         } );
-        this.cube = new THREE.Mesh(this.geometry, this.material);
-        this.scene.add(this.cube);
+        this.cube = new THREE.Mesh( this.geometry, this.material );
+        this.scene.add( this.cube );
 
         this.lights = [];
         this.lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
@@ -75,7 +75,7 @@ class App extends Component {
         this.cube.rotation.x += 0.01;
         this.cube.rotation.y += 0.01;
 
-        this.renderer.render(this.scene, this.camera);
+        this.renderer.render( this.scene, this.camera );
 
         // The window.requestAnimationFrame() method tells the browser that you wish to perform
         // an animation and requests that the browser call a specified function
@@ -93,6 +93,9 @@ class App extends Component {
 
         this.renderer.setSize( width, height );
         this.camera.aspect = width / height;
+
+        // Note that after making changes to most of camera properties you have to call
+        // .updateProjectionMatrix for the changes to take effect.
         this.camera.updateProjectionMatrix();
     };
 
@@ -112,6 +115,7 @@ class Container extends React.Component {
                     {isMounted ? "Unmount" : "Mount"}
                 </button>
                 {isMounted && <App />}
+                {isMounted && <div>Scroll to zoom, drag to rotate</div>}
             </>
         )
     }
