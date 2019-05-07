@@ -17,7 +17,8 @@ class App extends Component {
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.handleWindowResize);
-        this.stopAnimationLoop();
+        window.cancelAnimationFrame(this.requestID);
+        this.controls.dispose();
     }
 
     // Standard scene setup in Three.js. Check "Creating a scene" manual for more information
@@ -47,28 +48,28 @@ class App extends Component {
     // Code below is taken from Three.js BoxGeometry example
     // https://threejs.org/docs/#api/en/geometries/BoxGeometry
     addCustomSceneObjects = () => {
-        this.geometry = new THREE.BoxGeometry(2, 2, 2);
-        this.material = new THREE.MeshPhongMaterial( {
+        const geometry = new THREE.BoxGeometry(2, 2, 2);
+        const material = new THREE.MeshPhongMaterial( {
             color: 0x156289,
             emissive: 0x072534,
             side: THREE.DoubleSide,
             flatShading: true
         } );
-        this.cube = new THREE.Mesh( this.geometry, this.material );
+        this.cube = new THREE.Mesh( geometry, material );
         this.scene.add( this.cube );
 
-        this.lights = [];
-        this.lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-        this.lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-        this.lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+        const lights = [];
+        lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+        lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+        lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
 
-        this.lights[ 0 ].position.set( 0, 200, 0 );
-        this.lights[ 1 ].position.set( 100, 200, 100 );
-        this.lights[ 2 ].position.set( - 100, - 200, - 100 );
+        lights[ 0 ].position.set( 0, 200, 0 );
+        lights[ 1 ].position.set( 100, 200, 100 );
+        lights[ 2 ].position.set( - 100, - 200, - 100 );
 
-        this.scene.add( this.lights[ 0 ] );
-        this.scene.add( this.lights[ 1 ] );
-        this.scene.add( this.lights[ 2 ] );
+        this.scene.add( lights[ 0 ] );
+        this.scene.add( lights[ 1 ] );
+        this.scene.add( lights[ 2 ] );
     };
 
     startAnimationLoop = () => {
@@ -80,12 +81,8 @@ class App extends Component {
         // The window.requestAnimationFrame() method tells the browser that you wish to perform
         // an animation and requests that the browser call a specified function
         // to update an animation before the next repaint
-        this.requestID = requestAnimationFrame(this.startAnimationLoop);
+        this.requestID = window.requestAnimationFrame(this.startAnimationLoop);
     };
-
-    // The window.cancelAnimationFrame() method cancels an animation frame request
-    // previously scheduled through a call to window.requestAnimationFrame()
-    stopAnimationLoop = () => cancelAnimationFrame(this.requestID);
 
     handleWindowResize = () => {
         const width = this.mount.clientWidth;
