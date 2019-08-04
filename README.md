@@ -1,3 +1,5 @@
+This repo is a source code for my article published on codeburst.io https://codeburst.io/react-16-three-js-integration-tips-2019-b6afe19c0b83
+
 # Minimal Three.js Wrapper for React
 
 The goal of this repo is to showcase how to integrate Three.js into a React app with minimal efforts and without extra packages installed. 
