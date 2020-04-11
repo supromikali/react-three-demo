@@ -16,6 +16,9 @@ https://31yp61zxq6.codesandbox.io/
 - Three.js OrbitControls integration
 - scene resize on window resize
 
+# How Use Three OBJ Loader
+Here is another repo based on current one that has an example of Three OBJ Loader integration https://github.com/supromikali/react-three-obj-loader
+
 # How to Run an App Locally
 
 This demo app uses [react-scripts](https://github.com/facebook/create-react-app#readme), so to run the app locally just type in your terminal: `npm install && npm start` and the app should start in your browser at http://localhost:3000
