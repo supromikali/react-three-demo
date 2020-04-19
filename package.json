@@ -1,20 +1,18 @@
 {
   "name": "react-three-demo",
   "version": "1.0.0",
-  "description": "",
-  "keywords": [],
+  "description": "Basic React wrapper for Three.js",
+  "keywords": ["react", "three"],
   "main": "src/index.js",
   "dependencies": {
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
-    "react-scripts": "2.1.8",
-    "three": "^0.104.0"
+    "react": "latest",
+    "react-dom": "latest",
+    "react-scripts": "latest",
+    "three": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build": "react-scripts build"
   },
   "browserslist": [
     ">0.2%",
