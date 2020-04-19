@@ -16,7 +16,7 @@ https://31yp61zxq6.codesandbox.io/
 - Three.js OrbitControls integration
 - scene resize on window resize
 
-# How Use Three OBJ Loader
+# How to Use Three OBJ Loader
 Here is another repo based on current one that has an example of Three OBJ Loader integration https://github.com/supromikali/react-three-obj-loader
 
 Preview:
