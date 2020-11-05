@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
+
 This repo is a source code for my article published on codeburst.io https://codeburst.io/react-16-three-js-integration-tips-2019-b6afe19c0b83
 
 # Minimal Three.js Wrapper for React
